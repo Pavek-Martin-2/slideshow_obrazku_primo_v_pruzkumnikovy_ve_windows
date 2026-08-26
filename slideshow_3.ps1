@@ -11,14 +11,11 @@ sleep 5
 exit 1
 }
 
-
 # PWD (%CD%)
 [string] $pwd = Get-Location
 $d_pwd = $pwd.Length
 #echo $d_pwd
 if ($d_pwd -ne 3 ){ $pwd+="\" } 
-# kdyz neni korenovi adresar, tak prida na konec jeste lomitko, pro sjednoceni, jediny "C:\" ho uz ma..
-# takze paklize neni delka $d_pwd = 3, tak pridej lomitko
 
 #Write-Host -ForegroundColor Yellow $pwd
 #echo $pwd.GetTypeCode()
@@ -31,8 +28,6 @@ $pole_files = @()
 $pole_files += Get-ChildItem -Include $pole_include -Name # | Sort-Object sortovalo ale divne
 
 $file_slideshow = "R:\" # na ramdisk, zde pripadne upravit napr. na "C:\Windows\temp\"
-# C:\Windows\temp je normalni systemova slozka ktrera ji ve Windows je po instalaci od Microsoftu
-# a slouzi na ruzne odkadaci soubory
 $file_slideshow += "slideshow.txt"
 $d_pole_files = $pole_files.Length
 
