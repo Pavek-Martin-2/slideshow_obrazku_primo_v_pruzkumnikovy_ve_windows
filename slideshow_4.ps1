@@ -65,35 +65,22 @@ sleep -Milliseconds 300
 Set-Content -Path $file_slideshow -Encoding Unicode -Value $pole_out
 sleep -Milliseconds 300
 
-# pridano nove 23.9.2026
 $delka_args = $args.length
 #echo "celkem args $delka_args" # int32
 
-$duration = "--image-display-duration="
-$default = "1" # cekat bude vzdy 1 vterinu
+$ErrorActionPreference = "SilentlyContinue"
+$ar = [double] $args[0]
+$ErrorActionPreference = "Continue"
 
-# echo $args[0].GetType() pri zadani napr. 0.5 vteriny bude datovej typ Double 
-# takze proto se kontroluje pouze jesli neni type "String" a vchno vostani vezme
-
-if (( $delka_args -ge 1 ) -and ( $args[0].GetTypeCode() -like "String" )) { # -ge >=
-# pri spatnym zadani int32 jako $args[0] pouzije default hodnotu
-Write-Host -ForegroundColor Red "chyba default"
-$duration += $default # default 1 vterina
+if (( $delka_args -ge 1 ) -and ( $ar.Length -ne 0 )) {
+$duration = "--image-display-duration=" + $args[0]
 }else{
-
-# s parametrem $args[0] jako pocet vterin cekani mezi fotkama, pridano nove 23.9.2026
-#$duration = "--image-display-duration="
-$duration += [string] $args[0]
-}
-
-if ($delka_args -eq 0) { #int32
-#echo "default"
-$duration += $default # bez parametru default bude 1 vterina pauza
+Write-Host -ForegroundColor red "default"
+$duration = "--image-display-duration=1"
 }
 
 echo $duration
 sleep 1
-# konec pridano vone 23.9.2026
 
 # mpv --fullscreen=yes/no
 # --quiet - nabude zobrazovat cas videa u fotky + error...
