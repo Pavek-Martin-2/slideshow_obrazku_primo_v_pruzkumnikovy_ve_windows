@@ -1,4 +1,4 @@
-﻿cls
+﻿#cls
 
 # slideshow fotky v adresari pomoci mpv
 # verze 4 pridava zadani poctu vterin jako prvn parametr
@@ -66,15 +66,29 @@ Set-Content -Path $file_slideshow -Encoding Unicode -Value $pole_out
 sleep -Milliseconds 300
 
 $delka_args = $args.length
-#echo "celkem args $delka_args" # int32
+# echo "celkem args $delka_args" # int32
 
 $ErrorActionPreference = "SilentlyContinue"
+# osetreni chyby pokud by se omylem zadala carka misto desetiny tecky
+$chyba_carka = 0
+$str_args = [string] $args[0]
+#echo "str_args = $str_args"
+
+# bude hledat znak ","
+if ( $str_args.Contains(",")) {
+# echo "x"
+$chyba_carka = 1
+$duration = "--image-display-duration=1"
+}
+
 $ar = [double] $args[0]
 $ErrorActionPreference = "Continue"
 
-if (( $delka_args -ge 1 ) -and ( $ar.Length -ne 0 )) {
+if ((( $delka_args -ge 1 ) -and ( $ar.Length -ne 0 ) -and ( $chyba_carka -eq 0 ) )) {
+#echo "a"
 $duration = "--image-display-duration=" + $args[0]
 }else{
+#echo "b"
 Write-Host -ForegroundColor red "default"
 $duration = "--image-display-duration=1"
 }
